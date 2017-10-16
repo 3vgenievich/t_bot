@@ -18,7 +18,7 @@ switch ($message){
         $message='что?';
         sendMessage($token,$id,$message);
 }
-sendMessage($token,$id,$message);
+///sendMessage($token,$id,$message);
 function sendMessage($token, $id,$message)
 {
 file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
