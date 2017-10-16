@@ -6,13 +6,13 @@ $message= $output['message']['text'];
 
 switch ($message){
 
-    case '/start':
+    case 'hi':
         $message='Привет!';
         sendMessage($token,$id,$message);
         break;
-    case 'inlineKeyboard':
+    case 'how are you':
         $message='норм';
-        sendMessage($token,$id,$message.inlineKeyboard());
+        sendMessage($token,$id,$message.KeyboardMenu());
         break;
     default:
         $message='что?';
@@ -24,7 +24,7 @@ function sendMessage($token, $id,$message)
 file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
 }
 file_put_contents("logs.txt",$id);
-
+//тест клавиатуры
 function KeyboardMenu(){
     $buttons = [['hi'],['how are you'],['two'],['three']];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
@@ -35,17 +35,4 @@ function KeyboardMenu(){
     return $reply_markup;
 
 }
-function inlineKeyboard(){
-
-    $reply_markup = '';
-
-    $button1= array('text'=>'Меню','callback_data' =>'inline_one');
-    $button2=array('text'=>'Справка','callback_data' =>'inline_two');
-    $opt=[[$button1],[$button2]];
-
-    $keyboard = array("inline_keyboard" =>$opt);
-    $keyboard = json_encode($keyboard,true);
-    $reply_markup = '&$reply_markup='.$keyboard;
-    return $reply_markup;
-
-}
+f
