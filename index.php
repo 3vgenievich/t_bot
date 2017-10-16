@@ -11,7 +11,7 @@ switch ($message){
         sendMessage($token,$id,$message);
         break;
     case 'inlineKeyboard':
-        $message='ХУЙОВА';
+        $message='норм';
         sendMessage($token,$id,$message.inlineKeyboard());
         break;
     default:
@@ -39,7 +39,7 @@ function inlineKeyboard(){
 
     $keyboard = array("inline_keyboard" =>$opt);
     $keyboard = json_encode($keyboard,true);
-    $reply_markup = '&$reply_markup'.$keyboard;
+    $reply_markup = '&$reply_markup='.$keyboard;
     return $reply_markup;
 
 }
