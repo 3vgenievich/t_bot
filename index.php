@@ -26,14 +26,13 @@ file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_i
 file_put_contents("logs.txt",$id);
 
 function KeyboardMenu(){
-    $buttons = [['Где я ?'],['1'],['2'],['Справка']];
+    $buttons = [['hi'],['how are you'],['two'],['three']];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
                                         'selective' => true]);
     $reply_markup ='&reply_markup='.$keyboard.'';
-    $replayKey='&reply_markup'.$keyboard;
-    return $replayKey;
+    return $reply_markup;
 
 }
 function inlineKeyboard(){
