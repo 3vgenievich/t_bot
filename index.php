@@ -35,4 +35,3 @@ function KeyboardMenu(){
     return $reply_markup;
 
 }
-f
