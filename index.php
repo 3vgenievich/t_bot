@@ -6,7 +6,7 @@ $message= $output['message']['text'];
 
 switch ($message){
 
-    case '/Start':
+    case '/start':
         $message='Привет, я покажу тебе ближайшие автосервисы';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
