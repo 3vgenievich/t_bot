@@ -3,7 +3,6 @@ $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
 $message= $output['message']['text'];
-$location = new SendLocation();
 switch ($message){
 
     case '/start':
@@ -12,7 +11,7 @@ switch ($message){
         break;
     case 'Где я?':
         $message='Ваше местоположение:';
-        sendMessage($token,$id,$location,$message.KeyboardMenu());
+        sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'как дела?':
         $message='отлично';
