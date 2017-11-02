@@ -7,7 +7,7 @@ $message= $output['message']['text'];
 switch ($message){
 
     case '/start':
-        $message='Привет, я покажу тебе ближайшие автосервисы';
+        $message='Привет';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Где я?':
@@ -30,7 +30,7 @@ file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_i
 file_put_contents("logs.txt",$id);
 //тест клавиатуры
 function KeyboardMenu(){
-    $buttons = [['Где я?','request_location'=>true],['как дела?'],['справка'],['123']];
+    $buttons = [['Где я?'],['как дела?'],['справка'],['123']];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
