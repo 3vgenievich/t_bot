@@ -30,7 +30,7 @@ file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_i
 file_put_contents("logs.txt",$id);
 //тест клавиатуры
 function KeyboardMenu(){
-    $buttons = [[['text'=>"Где я?", 'request_location'=>true]],[['text'=>"Привет"]],[['text'=>"123"]]];
+    $buttons = [[['text'=>"Где я?", 'request_location'=>true]],[['text'=>"Показать автосервисы"]],[['text'=>"справка"]]];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
