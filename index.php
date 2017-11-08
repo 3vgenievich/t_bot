@@ -10,7 +10,7 @@ switch ($message){
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    case 'send_location':
+    case 'Где я?':
         $message='Вы находитесь здесь: ';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
@@ -37,6 +37,7 @@ function KeyboardMenu(){
                 'text'=>"Где я?",
                 'request_location'=>true
             )
+
         )
     ),
                                         'resize_keyboard' => true,
