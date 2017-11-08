@@ -6,17 +6,17 @@ $message= $output['message']['text'];
 
 switch ($message){
 
-    case 'hi':
-        $message='Привет!';
-        sendMessage($token,$id,$message);
+    case '/start':
+        $message='hello!';
+        sendMessage($token,$id,$message.$keyboard());
         break;
     case 'how are you':
-        $message='норм';
+        $message='namana';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Где я?':
-        send_chat_action($message.$id, 'find_location');
-        send_location($message.$id);
+        sendMessage($token,$id,$message.KeyboardMenu());
+
     default:
         $message='что?';
         sendMessage($token,$id,$message);
@@ -29,7 +29,7 @@ file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_i
 file_put_contents("logs.txt",$id);
 //тест клавиатуры
 function KeyboardMenu(){
-    $buttons = [['Где я?'],['how are you'],['two'],['three']];
+    $buttons = [['Где я?','request_location'=>true],['how are you'],['two'],['three']];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
@@ -39,3 +39,11 @@ function KeyboardMenu(){
     return $reply_markup;
 
 }
+$replyMarkup3 =[
+    'keyboard' =>[ [ [
+        'text'=>'test',
+        'request_contact'=>true,
+    ]]],
+    'resize_keyboard'=>true,
+    'one_time_keyboard'=>true,
+];
