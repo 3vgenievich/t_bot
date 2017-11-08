@@ -39,11 +39,3 @@ function KeyboardMenu(){
     return $reply_markup;
 
 }
-$replyMarkup3 =[
-    'keyboard' =>[ [ [
-        'text'=>'test',
-        'request_contact'=>true,
-    ]]],
-    'resize_keyboard'=>true,
-    'one_time_keyboard'=>true,
-];
