@@ -31,15 +31,7 @@ file_put_contents("logs.txt",$id);
 //тест клавиатуры
 function KeyboardMenu(){
     //$buttons = [['Где я?'],['how are you'],['two'],['three']];
-    $keyboard =json_encode($keyboard=['keyboard' => array(
-        array(
-            array(
-                'text'=>"Где я?",
-                'request_location'=>true
-            )
-
-        )
-    ),
+    $keyboard =json_encode($keyboard=['keyboard' => array(array(array('text'=>"Где я?",'request_location'=>true)),array('text'=>"Привет!")),
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
                                         'selective' => true,
