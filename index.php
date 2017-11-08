@@ -8,7 +8,7 @@ switch ($message){
 
     case '/start':
         $message='hello!';
-        sendMessage($token,$id,$message.$keyboard());
+        sendMessage($token,$id,$message.$KeyboardMenu());
         break;
     case 'how are you':
         $message='namana';
