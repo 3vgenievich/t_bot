@@ -16,7 +16,7 @@ switch ($message){
         break;
     case 'Где я?':
         sendMessage($token,$id,$message.KeyboardMenu());
-
+        break;
     default:
         $message='что?';
         sendMessage($token,$id,$message);
