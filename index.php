@@ -11,7 +11,7 @@ switch ($message){
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    case 'Моё местоположение':
+    case '$location':
         $message='Вы сейчас здесь:';
         sendMessage($token,$id,$location.KeyboardMenu());
         break;
