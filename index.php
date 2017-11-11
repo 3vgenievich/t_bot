@@ -35,8 +35,7 @@ function KeyboardMenu(){
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
-                                        'selective' => true,
-                                        'request_location'=> true]);
+                                        'selective' => true]);
     $reply_markup ='&reply_markup='.$keyboard.'';
     return $reply_markup;
 
