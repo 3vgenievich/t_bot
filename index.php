@@ -11,9 +11,9 @@ switch ($message){
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    case 'Location':
+    case 'location':
         $message='Вы находитесь здесь: ';
-        sendMessage($token,$id,$lon,$lat,$message.KeyboardMenu());
+        sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
