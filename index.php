@@ -22,15 +22,15 @@ switch ($message){
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    /*case 'Где я?':
+    case 'Где я?':
         $message='Вы находитесь здесь: ';
         sendMessage($token,$id,$message.KeyboardMenu());
-        break;*/
+        break;
     case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    case "Где я?":
+    case 'location':
         if (isset($message->location)) {
             $message = "Отлично. Ваш заказ принят.";
             sendMessage($token,$id,$message.KeyboardMenu());
