@@ -12,7 +12,7 @@ switch ($message){
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case $location:
-        $message='Вы сейчас здесь:,$lat,$lon';
+        $message="Вы сейчас здесь:,$lat,$lon";
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Справка':
