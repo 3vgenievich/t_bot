@@ -18,13 +18,13 @@ switch ($message){
         break;
     case 'Показать автосервисы':
     {
-        if (!empty($shir))
+        if (is_empty($shir))
         {
             $message='Ваше местонахождение не определено, сперва нажмите /"Отправить местоположение"/';
         }
         else
             {
-            $message='урабляработает';
+            $message='показал';
             }
     }
         sendMessage($token,$id,$message.KeyboardMenu());
@@ -53,4 +53,8 @@ function KeyboardMenu(){
     $reply_markup ='&reply_markup='.$keyboard.'';
     return $reply_markup;
 
+}
+function is_empty(&$var)
+{
+    return !($var || (is_scalar($var) && strlen($var)));
 }
