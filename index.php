@@ -3,16 +3,17 @@ $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
 $message= $output['message']['text'];
-
+$lat=$output['latitude']; //Широта
+$lon=$output['longitude'];  //Долгота
 switch ($message){
 
     case '/start':
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    case 'Где я?':
+    case 'Location':
         $message='Вы находитесь здесь: ';
-        sendMessage($token,$id,$message.KeyboardMenu());
+        sendMessage($token,$id,$lon,$lat,$message.KeyboardMenu());
         break;
     case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
