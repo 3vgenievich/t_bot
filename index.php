@@ -8,11 +8,25 @@ $lat='latitude';
 $lon='longitude';
 switch ($message){
     case '/start':
-        $message='Привет!';
+        $message='Привет! Нажми отправить местоположение чтобы начать.';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case $location:
-        $message='Вы сейчас здесь:'.$location;
+        $message='Отлично! ваше местонахождение определено.';
+        $shir=$location;
+        sendMessage($token,$id,$message.KeyboardMenu());
+        break;
+    case 'Показать автосервисы':
+    {
+        if (!empty($shir))
+        {
+            $message='Ваше местонахождение не определено, сперва нажмите /"Отправить местоположение"/';
+        }
+        else
+            {
+            $message='урабляработает';
+            }
+    }
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Справка':
@@ -31,7 +45,7 @@ file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_i
 file_put_contents("logs.txt",$id);
 //тест клавиатуры
 function KeyboardMenu(){
-    $buttons = [[['text'=>"Моё местоположение", 'request_location'=>true]],[['text'=>"Показать автосервисы"]],[['text'=>"Справка"]]];
+    $buttons = [[['text'=>"Отправить местоположение", 'request_location'=>true]],[['text'=>"Показать автосервисы"]],[['text'=>"Справка"]]];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
