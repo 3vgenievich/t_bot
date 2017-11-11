@@ -1,8 +1,8 @@
 <?php
-$output = json_decode(file_get_contents('php://input'),true);
-$id = $output['message']['chat']['id'];
+/*$output = json_decode(file_get_contents('php://input'),true);
+$id = $output['message']['chat']['id'];*/
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
-$message= $output['message']['text'];
+/*$message= $output['message']['text'];
 $lat=$output['latitude']; //Широта
 $lon=$output['longitude'];  //Долгота
 /*switch ($message){
