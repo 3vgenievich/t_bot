@@ -11,7 +11,21 @@ switch ($message){
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
-    case 'location':
+    case 'Где я?':
+
+        // проверяем, что отправляены именно координаты
+        if (isset($message->location)) {
+            $message = 'Отлично. Вы сейчас тут';
+            sendMessage($token,$id,$message.KeyboardMenu());
+
+            //TODO: здесь логика для сохранения координат и информирования исполнителя
+        }
+        else{
+            $msg = "Нажмите кнопку \"Где я?\"";
+            sendMessage($token,$id,$message.KeyboardMenu());
+        }
+        break;
+    /*
         $message='Вы находитесь здесь: ';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
@@ -22,7 +36,7 @@ switch ($message){
     default:
         $message='Неправильный запрос.';
         sendMessage($token,$id,$message);
-}
+}*/
 ///sendMessage($token,$id,$message);
 function sendMessage($token, $id,$message)
 {
