@@ -2,30 +2,18 @@
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
-//$message= $output['message']['text'];
-$message = isset($output->message) ? $output->message : null;
-
-function send_location($id, $lat, $lon, $keyboard = null, $token)
-{
-    $data = array();
-    $data["chat_id"] = $id;
-    $data["latitude"] = $lat;//широта
-    $data["longitude"] = $lon;//долгота
-}
+$message= $output['message']['text'];
+$location=$output[$lat][$lon];
+$lat='latitude';
+$lon='longitude';
 switch ($message){
-
     case '/start':
         $message='Привет!';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Моё местоположение':
-        if (isset($message->location)) {
-            $message = '"Вы находитесь здесь:" ,$lat,$lon';
-        }
-        else {
-            $msg = "Нажмите кнопку \"Отправить мое местоположение\"";
-        }
-        sendMessage($token,$id,$message.KeyboardMenu());
+        $message='Вы сейчас здесь:';
+        sendMessage($token,$id,$location.KeyboardMenu());
         break;
     case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
