@@ -13,7 +13,7 @@ switch ($message){
         break;
     case $location:
         $message='Вы сейчас здесь:';
-        sendMessage($token,$id,$location.KeyboardMenu());
+        sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
