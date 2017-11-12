@@ -14,11 +14,11 @@ switch ($message){
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case $location:
-        $message='Отлично! ваше местонахождение определено.';
-        get_address($lat,$lon,$ApiKey);
-        $shr=$lat;      //Велосипеееееед
-        $dlg=$lon;      //Велосипеееееед
-        sendMessage($token,$id,$message.KeyboardMenu());
+        get_address($lat, $lon, $ApiKey);
+        $message = 'Отлично! ваше местонахождение определено.';
+        $shr = $lat;      //Велосипеееееед
+        $dlg = $lon;      //Велосипеееееед
+        sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
     {
