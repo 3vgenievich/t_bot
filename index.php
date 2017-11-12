@@ -15,7 +15,7 @@ switch ($message){
         break;
     case $location:
         get_address($lat, $lon, $ApiKey);
-        $message = $lon . "Отлично! ваше местонахождение определено.".$lat;
+        $message = "Отлично! ваше местонахождение определено.".$location;
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
