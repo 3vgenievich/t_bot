@@ -5,6 +5,7 @@ $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телег�
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
 $message= $output['message']['text'];
 $location=$output['longitude']['latitude'];
+$gwe='rabotaet';
 switch ($message) {
     case '/start':
         $message = 'Привет! Нажми отпраить местоположение чтобы начать.';
@@ -12,11 +13,12 @@ switch ($message) {
         break;
     case $location:
         $response = json_decode($location, true);
+        $gwg=$gwe;
         $lat = $response[0]['latitude'];
         $lon = $response[0]['longitude'];
         if (isset($lat))
             {
-                $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
+                $message = "Отлично! ваше местонахождение определено." . $lat . $lon.$gwg;
             }
         else
             {
