@@ -8,19 +8,22 @@ $location=$output['latitude']['longitude'];
 $lat=$output['latitude'];
 $perem='qweqwe';
 $lon=$output['longitude'];
-switch ($message){
+switch ($message) {
     case '/start':
-        $message='Привет! Нажми отправить местоположение чтобы начать.';
-        sendMessage($token,$id,$message.KeyboardMenu());
+        $message = 'Привет! Нажми отправить местоположение чтобы начать.';
+        sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $location:
+        if (isset($location))
+        {
         get_address($lat, $lon, $ApiKey);
-        $message = "Отлично! ваше местонахождение определено.".$lat.$perem;
+        $message = "Отлично! ваше местонахождение определено." . $lat . $perem;
+        }
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
     {
-        if (is_empty($lat) and is_empty($lon))
+        if (isset($location))
         {
             $message='Ваше местонахождение не определено, сперва нажмите /"Отправить местоположение"/';
         }
