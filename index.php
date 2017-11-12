@@ -14,7 +14,7 @@ switch ($message){
         break;
     case $location:
         get_address($lat, $lon, $ApiKey);
-        $message = "Отлично! ваше местонахождение определено.".$location;
+        $message = "Отлично! ваше местонахождение определено.".get_address($lat,$lon,$ApiKey);
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
@@ -67,7 +67,6 @@ function is_empty(&$var)
 function get_address($lat, $lon, $ApiKey)
 {
     $uri="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //гугл апи. возвращает адрес по координатам
-    file_get_contents($uri);
     return json_decode(file_get_contents($uri));
 }
 function get_nearest_places($lat,$lon,$ApiKey)
