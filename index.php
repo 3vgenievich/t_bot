@@ -14,11 +14,8 @@ switch ($message) {
         $response=json_decode($location,true);
         $lat=$response['latitude'];
         $lon=$response['longitude'];
-        if (isset($lat))
-        {
         get_address($lat, $lon, $ApiKey);
         $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
-        }
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
