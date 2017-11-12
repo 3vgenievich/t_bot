@@ -2,6 +2,7 @@
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
+$ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';
 $message= $output['message']['text'];
 $location=$output[$lat][$lon];
 $lat='latitude';
@@ -13,7 +14,7 @@ switch ($message){
         break;
     case $location:
         $message='Отлично! ваше местонахождение определено.';
-        $message='https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4'; //гугл апи. возвращает адрес по координатам
+        $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=$ApiKey"; //гугл апи. возвращает адрес по координатам
         $shir=$location;
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
