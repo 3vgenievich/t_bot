@@ -13,7 +13,7 @@ switch ($message) {
     case $location:
         $response=json_decode($location,true);
         $lat=$response[0]['latitude'];
-        $lon=$response[1]['longitude'];
+        $lon=$response[0]['longitude'];
         $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
         sendMessage($token, $id, $message . KeyboardMenu().get_address($lat,$lon,$ApiKey));
         break;
