@@ -11,8 +11,9 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $location:
-        $lat=$location['latitude'];
-        $lon=$location['longitude'];
+        $response=json_decode($location,true);
+        $lat=$response['latitude'];
+        $lon=$response['longitude'];
         if (isset($lat))
         {
         get_address($lat, $lon, $ApiKey);
