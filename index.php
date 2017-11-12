@@ -67,6 +67,6 @@ function is_empty(&$var)
  */
 function get_address($lat, $lon, $ApiKey)
 {
-    $uri="https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=$ApiKey"; //гугл апи. возвращает адрес по координатам
+    $uri="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //гугл апи. возвращает адрес по координатам
     return json_decode(file_get_contents($uri));
 }
