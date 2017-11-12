@@ -11,11 +11,18 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $location:
-        $response=json_decode($location,true);
-        $lat=$response[0]['latitude'];
-        $lon=$response[0]['longitude'];
-        $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
-        sendMessage($token, $id, $message . KeyboardMenu().get_address($lat,$lon,$ApiKey));
+        $response = json_decode($location, true);
+        $lat = $response[0]['latitude'];
+        $lon = $response[0]['longitude'];
+        if (isset($lat))
+            {
+                $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
+            }
+        else
+            {
+                $message ="ОПЯТЬ ЭТО ГОВНО НЕ РАБОТАЕТ ";
+            }
+        sendMessage($token, $id, $message . KeyboardMenu() . get_address($lat, $lon, $ApiKey));
         break;
     case 'Показать автосервисы':
     {
@@ -37,7 +44,7 @@ switch ($message) {
         break;
     default:
         $message='Неправильный запрос.';
-        sendMessage($token,$id,$message);
+        sendMessage($token,$id,$message.KeyboardMenu());
 }
 ///sendMessage($token,$id,$message);
 function sendMessage($token, $id,$message)
