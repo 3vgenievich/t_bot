@@ -16,7 +16,7 @@ switch ($message) {
         $lon = $response[0]["longitude"];
         if (isset($location))
             {
-                $message = "Отлично! ваше местонахождение определено." . $lat . $lon.$gwg;
+                $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
             }
         else
             {
