@@ -14,7 +14,7 @@ switch ($message) {
         $response = json_decode($Location, true);
         $lat = $response[0]["latitude"];
         $lon = $response[0]["longitude"];
-        if (isset($Location))
+        if (isset($lat))
             {
                 $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
             }
