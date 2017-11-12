@@ -4,16 +4,16 @@ $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телеграм. Убрать в отдельный файл!!!
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
 $message= $output['message']['text'];
-$Location=$output['chat_id']['longitude']['latitude'];
+$Location=$output['message']['longitude']['latitude'];
 switch ($message) {
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location:
-        $response = json_decode(file($Location), true);
-        $lat = $response[0]['latitude'];
-        $lon = $response[0]['longitude'];
+        $response = json_decode(($Location), true);
+        $lat = $response['latitude'];
+        $lon = $response['longitude'];
         if (isset($lat))
             {
                 $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
