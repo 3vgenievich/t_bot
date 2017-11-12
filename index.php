@@ -3,7 +3,7 @@ $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телеграм. Убрать в отдельный файл!!!
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
-$message= $output['message']['text'];
+$message= $output['message']['text']['location'];
 $Location=$output['longitude']['latitude'];
 switch ($message) {
     case '/start':
@@ -81,3 +81,4 @@ function get_nearest_places($lat,$lon,$ApiKey)
 {
     //логика поиска ближайших сервисов/шиномонтажек
 }
+?>
