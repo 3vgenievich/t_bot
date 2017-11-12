@@ -7,8 +7,8 @@ $message= $output["message"]["text"];
 $Location=$output["chat_id"]["longitude"]["latitude"];
 switch ($message) {
     case '/start':
-        $message = 'Привет! Нажми отпраить местоположение чтобы начать.';
-        sendMessage($token, $id, $message . KeyboardMenu());
+        //$message = 'Привет! Нажми отпраить местоположение чтобы начать.';
+        sendMessage("Привет! Нажми отпраить местоположение чтобы начать",$token, $id, $message . KeyboardMenu());
         break;
     case $Location:
         $response = json_decode($Location, true);
