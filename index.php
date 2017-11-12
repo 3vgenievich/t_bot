@@ -6,6 +6,7 @@ $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
 $message= $output['message']['text'];
 $location=$output['latitude']['longitude'];
 $lat=$output['latitude'];
+$perem='qweqwe';
 $lon=$output['longitude'];
 switch ($message){
     case '/start':
@@ -14,7 +15,7 @@ switch ($message){
         break;
     case $location:
         get_address($lat, $lon, $ApiKey);
-        $message = "Отлично! ваше местонахождение определено.".get_address($lat,$lon,$ApiKey);
+        $message = "Отлично! ваше местонахождение определено.".$perem;
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
