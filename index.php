@@ -1,10 +1,10 @@
 <?php
 $output = json_decode(file_get_contents('php://input'),true);
-$id = $output['message']['chat']['id'];
+$id = $output["message"]["chat"]["id"];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телеграм. Убрать в отдельный файл!!!
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
-$message= $output['message']['text'];
-$location=$output['chat_id']['longitude']['latitude'];
+$message= $output["message"]["text"];
+$location=$output["chat_id"]["longitude"]["latitude"];
 switch ($message) {
     case '/start':
         $message = 'Привет! Нажми отпраить местоположение чтобы начать.';
@@ -12,8 +12,8 @@ switch ($message) {
         break;
     case $location:
         $response = json_decode($location, true);
-        $lat = $response[0]['latitude'];
-        $lon = $response[0]['longitude'];
+        $lat = $response[0]["latitude"];
+        $lon = $response[0]["longitude"];
         if (isset($location))
             {
                 $message = "Отлично! ваше местонахождение определено." . $lat . $lon.$gwg;
