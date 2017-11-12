@@ -5,6 +5,7 @@ $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';
 $message= $output['message']['text'];
 $location=$output[$lat][$lon];
+$geo=$output['address'];
 $lat='latitude';
 $lon='longitude';
 switch ($message){
@@ -14,8 +15,9 @@ switch ($message){
         break;
     case $location:
         $message='Отлично! ваше местонахождение определено.';
-        $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=$ApiKey"; //гугл апи. возвращает адрес по координатам
-        $shir=$location;
+        get_address($lat,$lon,$ApiKey);
+        $shr=$lat;      //Велосипеееееед
+        $dlg=$lon;      //Велосипеееееед
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Показать автосервисы':
@@ -44,7 +46,6 @@ function sendMessage($token, $id,$message)
 {
 file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
 }
-file_put_contents("logs.txt",$id);
 //тест клавиатуры
 function KeyboardMenu(){
     $buttons = [[['text'=>"Отправить местоположение", 'request_location'=>true]],[['text'=>"Показать автосервисы"]],[['text'=>"Справка"]]];
@@ -59,4 +60,15 @@ function KeyboardMenu(){
 function is_empty(&$var)
 {
     return !($var || (is_scalar($var) && strlen($var)));
+}
+
+/**
+ * @param $lat
+ * @param $lon
+ * @param $ApiKey
+ */
+function get_address($lat, $lon, $ApiKey)
+{
+    file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=$ApiKey"); //гугл апи. возвращает адрес по координатам
+
 }
