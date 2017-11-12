@@ -19,7 +19,7 @@ switch ($message){
         break;
     case 'Показать автосервисы':
     {
-        if (is_empty($shir))
+        if (is_empty($lat) and is_empty($lon))
         {
             $message='Ваше местонахождение не определено, сперва нажмите /"Отправить местоположение"/';
         }
