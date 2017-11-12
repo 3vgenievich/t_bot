@@ -13,6 +13,7 @@ switch ($message){
         break;
     case $location:
         $message='Отлично! ваше местонахождение определено.';
+        $message='https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4'; //гугл апи. возвращает адрес по координатам
         $shir=$location;
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
