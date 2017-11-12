@@ -4,10 +4,10 @@ $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';
 $message= $output['message']['text'];
-$location=$output[$lat][$lon];
+$location=$output['latitude']['longitude'];
 $geo=$output['address'];
-$lat='latitude';
-$lon='longitude';
+$lat=$output['latitude'];
+$lon=$output['longitude'];
 switch ($message){
     case '/start':
         $message='Привет! Нажми отправить местоположение чтобы начать.';
@@ -16,8 +16,6 @@ switch ($message){
     case $location:
         get_address($lat, $lon, $ApiKey);
         $message = 'Отлично! ваше местонахождение определено.';
-        $shr = $lat;      //Велосипеееееед
-        $dlg = $lon;      //Велосипеееееед
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case 'Показать автосервисы':
