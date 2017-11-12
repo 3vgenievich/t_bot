@@ -10,7 +10,7 @@ switch ($message) {
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
-    case $message['Location']:
+    case '$location':
         $response = json_decode(($Location), true);
         $lat = $response['latitude'];
         $lon = $response['longitude'];
