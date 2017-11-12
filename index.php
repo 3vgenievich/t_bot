@@ -5,19 +5,18 @@ $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телег�
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
 $message= $output['message']['text'];
 $location=$output['latitude']['longitude'];
-$lat=$output['latitude'];
-$perem='qweqwe';
-$lon=$output['longitude'];
 switch ($message) {
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $location:
-        if (isset($location))
+        $lat=$location['latitude'];
+        $lon=$location['longitude'];
+        if (isset($lat))
         {
         get_address($lat, $lon, $ApiKey);
-        $message = "Отлично! ваше местонахождение определено." . $lat . $perem;
+        $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
         }
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
@@ -26,6 +25,7 @@ switch ($message) {
         if (isset($location))
         {
             $message="ОТВЕТ ПРИХОДИТ";
+            //логика вывода ближайших мест
         }
         else
             {
