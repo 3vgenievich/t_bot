@@ -3,7 +3,7 @@ $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телеграм. Убрать в отдельный файл!!!
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
-$message= $output['message']['text']['location'];
+$message= $output['message']['text'];
 $Location=$output['longitude']['latitude'];
 switch ($message) {
     case '/start':
@@ -11,7 +11,7 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case '$location':
-        $response = json_decode(($Location), true);
+        $response = $Location;
         $lat = $response['latitude'];
         $lon = $response['longitude'];
         if (isset($lat))
@@ -20,7 +20,7 @@ switch ($message) {
             }
         else
             {
-                $message ="ОПЯТЬ ЭТО ГОВНО НЕ РАБОТАЕТ ";
+                $message ="error";
             }
         sendMessage($token, $id, $message . KeyboardMenu() . get_address($lat, $lon, $ApiKey));
         break;
