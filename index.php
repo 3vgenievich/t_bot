@@ -5,6 +5,12 @@ $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телег�
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
 $message= $output['message']['text'];
 $Location=$output['longitude']['latitude'];
+if ($message=$location)
+{
+    $lat = $Location['latitude'];
+    $lon = $Location['longitude'];
+    $message=('eeeeboy'.$lat.$lon);
+}
 switch ($message) {
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
