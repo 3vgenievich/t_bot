@@ -21,7 +21,7 @@ switch ($message) {
             {
                 $message ="error";
             }
-        sendMessage($token, $id, $message,$Location . KeyboardMenu() . get_address($lat, $lon, $ApiKey));
+        sendMessage($token, $id, $message,$lat,$lon . KeyboardMenu() . get_address($lat, $lon, $ApiKey));
         break;
     case 'Показать автосервисы':
     {
