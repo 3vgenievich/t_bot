@@ -10,10 +10,10 @@ switch ($message) {
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
-    case '$location':
-        $lat = $location['latitude'];
-        $lon = $location['longitude'];
-        if (isset($location['latitude']))
+    case '$Location':
+        $lat = $Location['latitude'];
+        $lon = $Location['longitude'];
+        if (isset($Location['latitude']))
             {
                 $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
             }
