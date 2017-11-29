@@ -11,10 +11,10 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location:
+        $lat = $Location['latitude'];
+        $lon = $Location['longitude'];
         if (isset($Location))
             {
-                $lat = $Location['latitude'];
-                $lon = $Location['longitude'];
                 $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
             }
         else
