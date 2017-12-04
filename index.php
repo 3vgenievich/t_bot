@@ -15,7 +15,7 @@ switch ($message) {
         $lon = $Location['longitude'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено." .$lat.$lon;
+                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon;
             }
         else
             {
