@@ -11,8 +11,17 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location:
-    $message = "Отлично! ваше местонахождение определено." . $location;
-        sendMessage($token, $id, $message.KeyboardMenu() /*. get_address($lat, $lon, $ApiKey*/));
+        $lat = $Location['location'];
+        $lon = $Location['longitude'];
+        if (isset($Lat))
+            {
+                $message = "Отлично! ваше местонахождение определено." . $lat;
+            }
+        else
+            {
+                $message ="error";
+            }
+        sendMessage($token, $id, $message,$lat,$lon . KeyboardMenu() . get_address($lat, $lon, $ApiKey));
         break;
     case 'Показать автосервисы':
     {
