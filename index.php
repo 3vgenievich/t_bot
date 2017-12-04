@@ -4,7 +4,7 @@ $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телеграм. Убрать в отдельный файл!!!
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
 $message= $output['message']['text'];
-$Location=$message['latitude']['longitude'];
+$Location=$output['message']['location'];
 switch ($message) {
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
