@@ -13,14 +13,14 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        if (isset($Location))
-            {
+       /* if (isset($Location))
+         /*   {*/
                 $message = "Отлично! ваше местонахождение определено." . $lat . $lon;
             }
-        else
-            {
+     /*   else
+           {
                 $message ="error";
-            }
+            }*/
         sendMessage($token, $id, $message,$lat,$lon . KeyboardMenu() . get_address($lat, $lon, $ApiKey));
         break;
     case 'Показать автосервисы':
