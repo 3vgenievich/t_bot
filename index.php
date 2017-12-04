@@ -25,7 +25,7 @@ switch ($message) {
         break;
     case 'Показать автосервисы':
     {
-        if (isset($location))
+        if (isset($lat,$lon))
         {
             $message="ОТВЕТ ПРИХОДИТ";
             //логика вывода ближайших мест
