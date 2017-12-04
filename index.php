@@ -24,17 +24,15 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Показать автосервисы':
-    {
         if (isset($lat,$lon))
         {
             $message="ОТВЕТ ПРИХОДИТ";
             //логика вывода ближайших мест
         }
         else
-            {
+        {
             $message='Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
-            }
-    }
+        }
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     case 'Справка':
