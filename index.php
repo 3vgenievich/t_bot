@@ -12,10 +12,10 @@ switch ($message) {
         break;
     case $Location['location']:
         $lat = $Location['location:latitude'];
-        $lon = $Location[1]['location":longitude'];
-        if (isset($Lat))
+        $lon = $Location['location:longitude'];
+        if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено." . $lat.$lon;
+                $message = "Отлично! ваше местонахождение определено." .$lat.$lon;
             }
         else
             {
