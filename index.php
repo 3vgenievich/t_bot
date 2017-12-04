@@ -11,6 +11,7 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
+        global $lat,$lon;
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
         if (isset($lat,$lon))
