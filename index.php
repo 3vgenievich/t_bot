@@ -55,12 +55,15 @@ switch ($message) {
     case 'Ближайшие автосервисы':
         $message='вывод ближайших ... через апи';
         sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
     case 'Ближайшие шиномонтажи':
         $message='вывод ближайших ... через апи';
         sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
     case 'Телефоны эвакуаторов':
         $message='телефоны из БД';
         sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
     case 'Назад':
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
@@ -73,7 +76,7 @@ function sendMessage($token, $id,$message)
 {
 file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
 }
-//тест клавиатуры
+
 function KeyboardMenu()  #Основная клавиатура
 {
     $buttons = [[['text'=>"Отправить местоположение", 'request_location'=>true]],[['text'=>"Поиск ближайших мест"]],[['text'=>"Справка"]]];
@@ -83,8 +86,8 @@ function KeyboardMenu()  #Основная клавиатура
                                         'selective' => true]);
     $reply_markup ='&reply_markup='.$keyboard.'';
     return $reply_markup;
-
 }
+
 function KeyboardMenu2()  #дополнительная клавиатура
 {
     $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
