@@ -13,7 +13,7 @@
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token=file_get_contents('./token.txt')/*'469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'*/; //Токен телеграм. Убрать в отдельный файл!!!
-$ApiKey=file_get_contents('.ApiKey.txt')/*'AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4'*/;      //ApiKey гугл . Убрать в отдельный файл!!!
+$ApiKey=file_get_contents('./ApiKey.txt')/*'AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4'*/;      //ApiKey гугл . Убрать в отдельный файл!!!
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
 
