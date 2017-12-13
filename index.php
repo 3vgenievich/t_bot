@@ -16,6 +16,7 @@ $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телег�
 $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл . Убрать в отдельный файл!!!
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -35,7 +36,7 @@ switch ($message) {
             }
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
-    case 'Поиск ближайших мест':
+    case 'Поиск ближайших мест': #сделать так что бы при пустой локации клавиатура 2 не открывалась
         if (isset($lat,$lon))
         {
             $message="ОТВЕТ ПРИХОДИТ";
@@ -65,7 +66,7 @@ switch ($message) {
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Назад':
-        sendMessage($token,$id,$message.KeyboardMenu());
+        sendMessage($token,$id.KeyboardMenu());
         break;
     default:
         $message='Неправильный запрос. Для получения справки нажмите "FAQ"';
