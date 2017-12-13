@@ -3,7 +3,7 @@
  * to do:
  * 1)Токен телеграм. Убрать в отдельный файл!
  * 2)ApiKey гугл . Убрать в отдельный файл!
- * 3)Написать Открытие доп. клавиатуры, логика вывода ближайших мест!!!
+ * +++3)Создать вторую клавиатуру!!!
  * 4)Починить get_adress
  * 5)Разобраться с $lat $lon
  * 6)Написать логику поиска ближайших сервисов/шиномонтажек
@@ -48,7 +48,7 @@ switch ($message) {
         }
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
-    case 'FAQ':
+    case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
@@ -66,11 +66,11 @@ switch ($message) {
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Назад':
-        $message='в главное меню';
+        $message='Главное меню';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     default:
-        $message='Неправильный запрос. Для получения справки нажмите "FAQ"';
+        $message='Неправильный запрос. Для получения справки нажмите "Справка"';
         sendMessage($token,$id,$message.KeyboardMenu());
 }
 ///sendMessage($token,$id,$message);
