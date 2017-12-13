@@ -1,19 +1,20 @@
 <?php
 /* ------------------------------------------------------------------------
  * to do:
- * 1)Токен телеграм. Убрать в отдельный файл!
- * 2)ApiKey гугл . Убрать в отдельный файл!
+ * +++1)Токен телеграм. Убрать в отдельный файл!
+ * +++2)ApiKey гугл . Убрать в отдельный файл!
  * +++3)Создать вторую клавиатуру!!!
- * 4)Починить get_adress
+ * 4)Починить get_address
  * 5)Разобраться с $lat $lon
  * 6)Написать логику поиска ближайших сервисов/шиномонтажек
  * 7)Написать импорт номеров автоэвакуаторов из БД
+ * 8)Изменить расширение файлов с токеном и apikey . закрыть к ним доступ на сервере.
  *-------------------------------------------------------------------------
  * */
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
-$token=file_get_contents('./token.txt')/*'469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'*/; //Токен телеграм. Убрать в отдельный файл!!!
-$ApiKey=file_get_contents('./ApiKey.txt')/*'AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4'*/;      //ApiKey гугл . Убрать в отдельный файл!!!
+$token=file_get_contents('./token.txt');
+$ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
 
@@ -28,7 +29,9 @@ switch ($message) {
         $lon = $Location['longitude'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon;
+                $getplace =file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey);
+                $adr = $getplace['formatted_address'];
+                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon." Адрес ".$adr;
             }
         else
             {
@@ -39,7 +42,7 @@ switch ($message) {
     case 'Поиск ближайших мест': #сделать так что бы при пустой локации клавиатура 2 не открывалась
         if (isset($lat,$lon))
         {
-            $message="ОТВЕТ ПРИХОДИТ";
+            $message="Ответ приходит , всё покайфу";
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
         }
         else
@@ -103,12 +106,17 @@ function KeyboardMenu2()  #дополнительная клавиатура
 }
 function get_address($lat, $lon, $ApiKey)
 {
-    $uri="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //гугл апи. возвращает адрес по координатам
-    return json_decode(file_get_contents($uri));
+    $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //возвращает адрес по координатам
+
 }
 function get_nearest_places($lat,$lon,$ApiKey)
 {
-    //логика поиска ближайших сервисов/шиномонтажек
+    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=автосервис&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    /*
+     *для автосервиса: type:car_repair keyword:автосервис
+     *для шиномонтажа type:car_repair keyword:шиномонтаж
+     *для эвакуаторов type:car_repair keyword:эвакуатор
+     * */
 }
 function evacuation_call()
 {
