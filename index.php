@@ -66,7 +66,7 @@ switch ($message) {
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Назад':
-        sendMessage($token,$id.KeyboardMenu());
+        sendMessage($token,$id,$message.KeyboardMenu());
         break;
     default:
         $message='Неправильный запрос. Для получения справки нажмите "FAQ"';
