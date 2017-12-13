@@ -39,6 +39,8 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': #сделать так что бы при пустой локации клавиатура 2 не открывалась
+        $lat=$Location['latitude'];
+        $lon=$Location['longitude'];
         if (isset($lat,$lon))
         {
             $message="Ответ приходит , всё покайфу";
