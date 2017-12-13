@@ -4,7 +4,7 @@
  * +++1)Токен телеграм. Убрать в отдельный файл!
  * +++2)ApiKey гугл . Убрать в отдельный файл!
  * +++3)Создать вторую клавиатуру!!!
- * 4)Починить get_address
+ * +++4)Починить get_address
  * 5)Разобраться с $lat $lon
  * 6)Написать логику поиска ближайших сервисов/шиномонтажек
  * 7)Написать импорт номеров автоэвакуаторов из БД
@@ -56,10 +56,14 @@ switch ($message) {
         break;
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
-        $message='вывод ближайших ... через апи';
+        $lat=$Location['latitude'];
+        $lon=$Location['longitude'];
+        $keyword='автосервис';
+        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
+        $keyword='шиномонтаж';
         $message='вывод ближайших ... через апи';
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
@@ -107,14 +111,19 @@ function get_address($lat, $lon, $ApiKey)
 {
     $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //возвращает адрес по координатам
     $address = get_object_vars(json_decode(file_get_contents($url)));
-// pick out what we need (lat,lng)
     $address = $address['results'][0]->formatted_address;
     return $address;
 
 }
-function get_nearest_places($lat,$lon,$ApiKey)
+function get_nearest_places($lat,$lon,$keyword,$ApiKey)
 {
-    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=автосервис&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    $place = get_object_vars(json_decode(file_get_contents($url)));
+    $place = $place['results'][0]->name.",".$place['results'][0]->opening_hours.",".$place['results'][0]->vicinity;
+    return $place;
+
+
+
     /*
      *для автосервиса: type:car_repair keyword:автосервис
      *для шиномонтажа type:car_repair keyword:шиномонтаж
