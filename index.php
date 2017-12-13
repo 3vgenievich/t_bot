@@ -30,7 +30,7 @@ switch ($message) {
         $lon = $Location['longitude'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon;
+                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon.get_address($lat,$lon,$ApiKey);
             }
         else
             {
@@ -106,6 +106,10 @@ function KeyboardMenu2()  #дополнительная клавиатура
 function get_address($lat, $lon, $ApiKey)
 {
     $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //возвращает адрес по координатам
+    $address = get_object_vars(json_decode(file_get_contents($url)));
+// pick out what we need (lat,lng)
+    $address = $address['results'][0]->formatted_address;
+    return $address;
 
 }
 function get_nearest_places($lat,$lon,$ApiKey)
