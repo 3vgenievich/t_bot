@@ -31,7 +31,7 @@ switch ($message) {
         if (isset($lat,$lon))
             {
 
-                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon;
+                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon.file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey);
             }
         else
             {
