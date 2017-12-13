@@ -18,7 +18,6 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
-global $lat,$lon;
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -26,6 +25,7 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
+        global $lat,$lon;
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
         global $lat,$lon;
