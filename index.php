@@ -5,7 +5,7 @@
  * +++2)ApiKey гугл . Убрать в отдельный файл!
  * +++3)Создать вторую клавиатуру!!!
  * +++4)Починить get_address
- * 5)Разобраться с $lat $lon
+ * 5)Разобраться с $lat $lon - добавить бд для широты и долготы, загрузка широты и долготы из бд
  * 6)Написать логику поиска ближайших сервисов/шиномонтажек
  * 7)Написать импорт номеров автоэвакуаторов из БД
  * 8)Изменить расширение файлов с токеном и apikey . закрыть к ним доступ на сервере.
@@ -25,8 +25,9 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
-        $GLOBALS["lat"] = $Location['latitude'];
-        $GLOBALS["lon"] = $Location['longitude'];
+        $lat = $Location['latitude'];
+        $lon = $Location['longitude'];
+        global $lat,$lon;
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon.get_address($lat,$lon,$ApiKey);
