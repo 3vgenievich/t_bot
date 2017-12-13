@@ -28,7 +28,6 @@ switch ($message) {
         global $lat,$lon;
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        global $lat,$lon;
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
