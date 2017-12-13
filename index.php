@@ -31,7 +31,7 @@ switch ($message) {
         global $lat,$lon;
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
+                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
             }
         else
             {
