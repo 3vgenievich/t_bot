@@ -30,7 +30,7 @@ switch ($message) {
         global $lat,$lon;
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon.get_address($lat,$lon,$ApiKey);
+                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
             }
         else
             {
@@ -56,15 +56,13 @@ switch ($message) {
         break;
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
-        $lat=$Location['latitude'];
-        $lon=$Location['longitude'];
         $keyword='автосервис';
         $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
         $keyword='шиномонтаж';
-        $message='вывод ближайших ... через апи';
+        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Телефоны эвакуаторов':
