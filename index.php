@@ -1,11 +1,23 @@
 <?php
+/* ------------------------------------------------------------------------
+ * to do:
+ * 1)Токен телеграм. Убрать в отдельный файл!
+ * 2)ApiKey гугл . Убрать в отдельный файл!
+ * 3)Написать Открытие доп. клавиатуры, логика вывода ближайших мест!!!
+ * 4)Починить get_adress
+ * 5)Разобраться с $lat $lon
+ * 6)Написать логику поиска ближайших сервисов/шиномонтажек
+ * 7)Написать импорт номеров автоэвакуаторов из БД
+ *-------------------------------------------------------------------------
+ * */
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI'; //Токен телеграм. Убрать в отдельный файл!!!
-$ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл .
+$ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';      //ApiKey гугл . Убрать в отдельный файл!!!
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
 switch ($message) {
+    /*клавиатура 1*/
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
         sendMessage($token, $id, $message . KeyboardMenu());
@@ -19,28 +31,41 @@ switch ($message) {
             }
         else
             {
-                $message ="error";
+                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
             }
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
-    case 'Показать автосервисы':
+    case 'Поиск ближайших мест':
         if (isset($lat,$lon))
         {
             $message="ОТВЕТ ПРИХОДИТ";
-            //логика вывода ближайших мест
+            //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
         }
         else
         {
-            $message='Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
+            $message = 'Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
         }
-        sendMessage($token,$id,$message.KeyboardMenu());
+        sendMessage($token,$id,$message.KeyboardMenu2());
         break;
-    case 'Справка':
+    case 'FAQ':
         $message='по вопросам разработки : vk.com/3vgenievich';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
+    /*клавиатура 2*/
+    case 'Ближайшие автосервисы':
+        $message='вывод ближайших ... через апи';
+        sendMessage($token,$id,$message.KeyboardMenu2());
+    case 'Ближайшие шиномонтажи':
+        $message='вывод ближайших ... через апи';
+        sendMessage($token,$id,$message.KeyboardMenu2());
+    case 'Телефоны эвакуаторов':
+        $message='телефоны из БД';
+        sendMessage($token,$id,$message.KeyboardMenu2());
+    case 'Назад':
+        sendMessage($token,$id,$message.KeyboardMenu());
+        break;
     default:
-        $message='Неправильный запрос.';
+        $message='Неправильный запрос. Для получения справки нажмите "FAQ"';
         sendMessage($token,$id,$message.KeyboardMenu());
 }
 ///sendMessage($token,$id,$message);
@@ -49,8 +74,9 @@ function sendMessage($token, $id,$message)
 file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
 }
 //тест клавиатуры
-function KeyboardMenu(){
-    $buttons = [[['text'=>"Отправить местоположение", 'request_location'=>true]],[['text'=>"Показать автосервисы"]],[['text'=>"Справка"]]];
+function KeyboardMenu()  #Основная клавиатура
+{
+    $buttons = [[['text'=>"Отправить местоположение", 'request_location'=>true]],[['text'=>"Поиск ближайших мест"]],[['text'=>"Справка"]]];
     $keyboard =json_encode($keyboard=['keyboard' => $buttons,
                                         'resize_keyboard' => true,
                                         'one_time_keyboard'=> false,
@@ -59,16 +85,17 @@ function KeyboardMenu(){
     return $reply_markup;
 
 }
-function is_empty(&$var)
+function KeyboardMenu2()  #дополнительная клавиатура
 {
-    return !($var || (is_scalar($var) && strlen($var)));
-}
+    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
+    $keyboard=json_encode($keyboard=['keyboard' => $buttons,
+        'resize_keyboard' => true,
+        'one_time_keyboard'=> false,
+        'selective' => true]);
+    $reply_markup ='&reply_markup='.$keyboard.'';
+    return $reply_markup;
 
-/**
- * @param $lat
- * @param $lon
- * @param $ApiKey
- */
+}
 function get_address($lat, $lon, $ApiKey)
 {
     $uri="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey; //гугл апи. возвращает адрес по координатам
@@ -78,4 +105,9 @@ function get_nearest_places($lat,$lon,$ApiKey)
 {
     //логика поиска ближайших сервисов/шиномонтажек
 }
+function evacuation_call()
+{
+    //импорт номеров автоэвакуаторов из БД
+}
 ?>
+
