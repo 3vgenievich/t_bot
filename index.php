@@ -66,6 +66,7 @@ switch ($message) {
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Назад':
+        $message='в главное меню';
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     default:
