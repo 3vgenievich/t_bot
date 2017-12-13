@@ -30,10 +30,8 @@ switch ($message) {
         $lon = $Location['longitude'];
         if (isset($lat,$lon))
             {
-                $getplace =file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey);
-                $adr = json_decode($getplace);
-                $plce=$adr['formatted_address'];
-                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon." Адрес ".$plce;
+
+                $message = "Отлично! ваше местонахождение определено. Широта: ".$lat."  Долгота: ".$lon;
             }
         else
             {
