@@ -54,7 +54,7 @@ switch ($message) {
         $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         if (isset($lat,$lon))
         {
-            $message="";
+            $message="Выберите";
             sendMessage($token,$id,$message.KeyboardMenu2());
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
         }
