@@ -14,7 +14,7 @@
  *-------------------------------------------------------------------------
  * */
 ###ПОДКЛЮЧЕНИЕ К  БД###
-$url = parse_url(getenv(" mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
+$url = parse_url(getenv("mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
 $server = $url["host"];
 $username = $url["user"];
 $password = $url["pass"];
@@ -37,7 +37,8 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        mysqli_query($conn,"INSERT INTO 'locations' ('id','lat','lon') VALUES('$userid,$lat,$lon')");
+        $conn->query("CREATE TABLE IF NOT EXISTS geolocations");
+        $conn->query("INSERT INTO geolocations (id,lat,lon) VALUES (".$id['id'].",".$lon.",".$lat.")");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
