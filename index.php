@@ -27,7 +27,7 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
-$userid=$id['id'];
+$conn->query("INSERT INTO ".$db."locations (id,locations) VALUES ('123','123')");
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -37,7 +37,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.location (id,locations) VALUES ('123','123')");
+        $conn->query("INSERT INTO ".$db."locations (id,locations) VALUES ('123','123')");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
