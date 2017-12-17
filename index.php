@@ -13,6 +13,12 @@
  * 9
  *-------------------------------------------------------------------------
  * */
+$output = json_decode(file_get_contents('php://input'),true);
+$id = $output['message']['chat']['id'];
+$token=file_get_contents('./token.txt');
+$ApiKey=file_get_contents('./ApiKey.txt');
+$message= $output['message']['text'];
+$Location=$output['message']['location'];
 ###ПОДКЛЮЧЕНИЕ К  БД###
 $url = parse_url(getenv("mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
 $server ='eu-cdbr-west-01.cleardb.com';
@@ -21,13 +27,6 @@ $password = '67a8b83e';
 $db = 'heroku_b8eb8cf712bc20c';
 $conn = new mysqli($server, $username, $password, $db);
 ###
-$output = json_decode(file_get_contents('php://input'),true);
-$id = $output['message']['chat']['id'];
-$token=file_get_contents('./token.txt');
-$ApiKey=file_get_contents('./ApiKey.txt');
-$message= $output['message']['text'];
-$Location=$output['message']['location'];
-
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -41,7 +40,6 @@ switch ($message) {
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-
             }
         else
             {
@@ -94,7 +92,6 @@ switch ($message) {
     default:
         $message='Неправильный запрос. Для получения справки нажмите "Справка"';
         sendMessage($token,$id,$message.KeyboardMenu());
-
 }
 ///sendMessage($token,$id,$message);
 function sendMessage($token, $id,$message)
