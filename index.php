@@ -51,8 +51,8 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        $lat=mysqli_query($conn,"(SELECT 'lat' FROM '$db' WHERE 'id'=".$id['id'].")");
-        $lon=mysqli_query($conn,"(SELECT 'lon' FROM '$db' WHERE 'id'=".$id['id'].")");
+        $lat=$conn->query("(SELECT lat FROM geolocations WHERE id=".$id['id'].")");
+        $lon=$conn->query("(SELECT lon FROM geolocations WHERE id=".$id['id'].")");
         if (isset($lat,$lon))
         {
             $message="Ответ приходит , всё покайфу";
