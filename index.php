@@ -39,7 +39,7 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        if (isset($address))
+        if (isset($lat,$lon))
         {
             $message="Ответ приходит , всё покайфу";
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
@@ -110,11 +110,10 @@ function get_address($lat, $lon, $ApiKey)
     $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey."&language=ru"; //возвращает адрес по координатам
     $address = get_object_vars(json_decode(file_get_contents($url)));
     $address = $address['results'][0]->formatted_address;
-    global $address;
     return $address;
 
 }
-function get_nearest_places($Location,/*$lat,$lon,*/$keyword,$ApiKey)
+function get_nearest_places($Location,$lat,$lon,$keyword,$ApiKey)
 {
     $lat = $Location['latitude'];
     $lon = $Location['longitude'];
