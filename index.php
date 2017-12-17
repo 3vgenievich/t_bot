@@ -12,12 +12,19 @@
  * 9
  *-------------------------------------------------------------------------
  * */
+
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+if ($message=$Location)
+{
+    global $lat,$lon;
+    $lat = $Location['latitude'];
+    $lon = $Location['longitude'];
+}
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -25,9 +32,9 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
-        global $lat,$lon;
+        /*global $lat,$lon;
         $lat = $Location['latitude'];
-        $lon = $Location['longitude'];
+        $lon = $Location['longitude'];*/
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
@@ -131,6 +138,14 @@ function get_nearest_places($lat,$lon,$keyword,$ApiKey)
 function evacuation_call()
 {
     //импорт номеров автоэвакуаторов из БД
+}
+function get_location()
+{
+
+}
+function load_location()
+{
+
 }
 ?>
 
