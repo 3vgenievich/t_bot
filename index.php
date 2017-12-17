@@ -18,6 +18,12 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+if ($message=$Location)
+{
+    global $lat,$lon;
+    $lat = $Location['latitude'];
+    $lon = $Location['longitude'];
+};
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -25,9 +31,9 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
-        global $lat,$lon;
+       /* global $lat,$lon;
         $lat = $Location['latitude'];
-        $lon = $Location['longitude'];
+        $lon = $Location['longitude'];*/
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
@@ -115,7 +121,7 @@ function get_address($lat, $lon, $ApiKey)
 }
 function get_nearest_places($lat,$lon,$keyword,$ApiKey)
 {
-    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=".$keyword."&key=".$ApiKey."&language=ru";//находит автосервисы в радиусе 5км
     $place = get_object_vars(json_decode(file_get_contents($url)));
     $place = $place['results'][0]->name.",".$place['results'][0]->opening_hours.",".$place['results'][0]->vicinity;
     return $place;
