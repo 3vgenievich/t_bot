@@ -6,6 +6,8 @@ $ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
 
+
+
 $url = parse_url(getenv("mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
 $server ='eu-cdbr-west-01.cleardb.com';
 $username = 'bf201afc3c04bc';
@@ -13,6 +15,73 @@ $password = '67a8b83e';
 $db = 'heroku_b8eb8cf712bc20c';
 $conn = new mysqli($server, $username, $password, $db);
 
+
+
+switch ($message){
+    case '/start':
+        $message = 'Привет! Нажми отправить местоположение чтобы начать.';
+        sendMessage($token, $id, $message . KeyboardMenu());
+        break;
+    case $Location['location']:
+        $lat = $Location['latitude'];
+        $lon = $Location['longitude'];
+        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id=".$id['id'].",lat=".$lat.",lon=".$lon);
+        if (isset($lat,$lon))
+            {
+                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
+            }
+        else
+            {
+                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
+            }
+        sendMessage($token, $id, $message.KeyboardMenu());
+        break;
+    case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
+        $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
+        if (isset($lat,$lon))
+        {
+            $message="Выберите";
+            sendMessage($token,$id,$message.KeyboardMenu2());
+            //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
+        }
+        else
+        {
+            $message = 'Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
+            sendMessage($token,$id,$message.KeyboardMenu());
+        }
+        break;
+    case 'Справка':
+        $message='по вопросам разработки : vk.com/3vgenievich';
+        sendMessage($token,$id,$message.KeyboardMenu());
+        break;
+    /*клавиатура 2*/
+    case 'Ближайшие автосервисы':
+        $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
+        $keyword='автосервис';
+        $message="ближайший к вам автосервис".get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Ближайшие шиномонтажи':
+        $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
+        $keyword='шиномонтаж';
+        $message="ближайший к вам шиномонтаж".get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Телефоны эвакуаторов':
+        $message='телефоны из БД';
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Назад':
+        $message='Главное меню';
+        sendMessage($token,$id,$message.KeyboardMenu());
+        break;
+    default:
+        $message='Неправильный запрос. Для получения справки нажмите "Справка"';
+        sendMessage($token,$id,$message.KeyboardMenu());
+}
 function sendMessage($token, $id,$message)
 {
     file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
@@ -60,72 +129,6 @@ function get_nearest_places($lat,$lon,$keyword,$ApiKey)
      *для шиномонтажа type:car_repair keyword:шиномонтаж
      *для эвакуаторов type:car_repair keyword:эвакуатор
      * */
-}
-
-switch ($message){
-    case '/start':
-        $message = 'Привет! Нажми отправить местоположение чтобы начать.';
-        sendMessage($token, $id, $message . KeyboardMenu());
-        break;
-    case $Location['location']:
-        $lat = $Location['latitude'];
-        $lon = $Location['longitude'];
-        /*$conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id=".$id['id'].",lat=".$lat.",lon=".$lon);*/
-        if (isset($lat,$lon))
-            {
-                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-            }
-        else
-            {
-                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
-            }
-        sendMessage($token, $id, $message.KeyboardMenu());
-        break;
-    case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        /*$lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
-        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");*/
-        if (isset($lat,$lon))
-        {
-            $message="Выберите";
-            sendMessage($token,$id,$message.KeyboardMenu2());
-            //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
-        }
-        else
-        {
-            $message = 'Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
-            sendMessage($token,$id,$message.KeyboardMenu());
-        }
-        break;
-    case 'Справка':
-        $message='по вопросам разработки : vk.com/3vgenievich';
-        sendMessage($token,$id,$message.KeyboardMenu());
-        break;
-    /*клавиатура 2*/
-    case 'Ближайшие автосервисы':
-       /* $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
-        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");*/
-        $keyword='автосервис';
-        $message="ближайший к вам автосервис".get_nearest_places($lat,$lon,$keyword,$ApiKey);
-        sendMessage($token,$id,$message.KeyboardMenu2());
-        break;
-    case 'Ближайшие шиномонтажи':
-       /* $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");
-        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='{$id['id']}')");*/
-        $keyword='шиномонтаж';
-        $message="ближайший к вам шиномонтаж".get_nearest_places($lat,$lon,$keyword,$ApiKey);
-        sendMessage($token,$id,$message.KeyboardMenu2());
-        break;
-    case 'Телефоны эвакуаторов':
-        $message='телефоны из БД';
-        sendMessage($token,$id,$message.KeyboardMenu2());
-        break;
-    case 'Назад':
-        $message='Главное меню';
-        sendMessage($token,$id,$message.KeyboardMenu());
-        break;
-    default:
-        $message='Неправильный запрос. Для получения справки нажмите "Справка"';
-        sendMessage($token,$id,$message.KeyboardMenu());
 }
 ?>
 
