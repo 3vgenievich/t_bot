@@ -36,7 +36,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations (id,lat,lon) VALUES (321,'-123313','312.123')");
+        $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations (id,lat,lon) VALUES (322,'-123313','312.123')");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
