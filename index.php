@@ -12,13 +12,13 @@
  * 9
  *-------------------------------------------------------------------------
  * */
-
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+session_start();
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -26,9 +26,11 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
-        global $lat,$lon;
-        $lat = $Location['latitude'];
-        $lon = $Location['longitude'];
+     /*   global $lat,$lon;
+    )$lat = $Location['latitude'];
+        $lon = $Location['longitude'];*/
+        $_SESSION['lat']=$Location['latitude'];
+        $_SESSION['lon']=$Location['longitude'];
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
