@@ -77,7 +77,7 @@ switch ($message){
             }
         else
             {
-                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";]
+                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
             }
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
