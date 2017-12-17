@@ -1,4 +1,5 @@
 <?php
+
 /* ------------------------------------------------------------------------
  * to do:
  * +++1)Токен телеграм. Убрать в отдельный файл!
@@ -12,6 +13,14 @@
  * 9
  *-------------------------------------------------------------------------
  * */
+###ПОДКЛЮЧЕНИЕ К  БД###
+$url = parse_url(getenv(" mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
+$server = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$db = substr($url["path"], 1);
+$conn = new mysqli($server, $username, $password, $db);
+###
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token=file_get_contents('./token.txt');
@@ -32,13 +41,14 @@ switch ($message) {
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
+
             }
         else
             {
                 $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
             }
         sendMessage($token, $id, $message.KeyboardMenu());
-        return $lat.$lon;
+        break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
         if (isset($lat,$lon))
         {
