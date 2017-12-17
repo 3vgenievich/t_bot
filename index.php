@@ -109,8 +109,8 @@ function get_address($lat, $lon, $ApiKey)
 {
     $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey."&language=ru"; //возвращает адрес по координатам
     $address = get_object_vars(json_decode(file_get_contents($url)));
-    global $address;
     $address = $address['results'][0]->formatted_address;
+    global $address;
     return $address;
 
 }
