@@ -36,7 +36,8 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id=321,lat='{$lat}',lon='{$lon}')");
+        $userid=$id['id'];
+        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id={$userid},lat={$lat},lon={$lon})");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
@@ -44,7 +45,7 @@ switch ($message) {
             }
         else
             {
-                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
+                $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";]
             }
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
