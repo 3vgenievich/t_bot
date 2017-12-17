@@ -36,8 +36,8 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $userid=$id['id'];
-        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations set id ='{$id}',lat='{$lat}',lon='$lon'");
+
+        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations set id ='{$id['id']}',lat='{$lat}',lon='$lon'");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
