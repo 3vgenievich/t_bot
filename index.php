@@ -25,9 +25,10 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
-        global $lat,$lon;
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
+        setcookie("lat",$lat,time()+3600);
+        setcookie("lon",$lon,time()+3600);
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
@@ -39,7 +40,7 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        if (isset($lat,$lon))
+        if (isset($_COOKIE["lat"],$_COOKIE["lon"]))
         {
             $message="Ответ приходит , всё покайфу";
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
@@ -57,12 +58,12 @@ switch ($message) {
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
         $keyword='автосервис';
-        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        $message=get_nearest_places($_COOKIE["lat"],$_COOKIE["lon"],$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
         $keyword='шиномонтаж';
-        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        $message=get_nearest_places($_COOKIE["lat"],$_COOKIE["lon"],$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Телефоны эвакуаторов':
@@ -132,13 +133,6 @@ function evacuation_call()
 {
     //импорт номеров автоэвакуаторов из БД
 }
-function get_location()
-{
-//запись местоположения  в бд
-}
-function load_location()
-{
-//загрузка местоположения из бд
-}
+
 ?>
 
