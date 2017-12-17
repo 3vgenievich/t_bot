@@ -28,8 +28,8 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $_SESSION['lat']=$lat;
-        $_SESSION['lon']=$lon;
+        $_SESSION['lat']=$Location['latitude'];
+        $_SESSION['lon']=$Location['longitude'];
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
