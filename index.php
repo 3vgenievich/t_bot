@@ -18,7 +18,6 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
-
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -32,46 +31,6 @@ switch ($message) {
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
                 sendMessage($token, $id, $message.KeyboardMenu());
-                switch ($message) {
-                    case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-                        if (isset($lat,$lon))
-                        {
-                            $message="Ответ приходит , всё покайфу";
-                            //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
-                        }
-                        else
-                        {
-                            $message = 'Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
-                        }
-                        sendMessage($token,$id,$message.KeyboardMenu2());
-                        break;
-                    case 'Справка':
-                        $message='по вопросам разработки : vk.com/3vgenievich';
-                        sendMessage($token,$id,$message.KeyboardMenu());
-                        break;
-                    /*клавиатура 2*/
-                    case 'Ближайшие автосервисы':
-                        $keyword='автосервис';
-                        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
-                        sendMessage($token,$id,$message.KeyboardMenu2());
-                        break;
-                    case 'Ближайшие шиномонтажи':
-                        $keyword='шиномонтаж';
-                        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
-                        sendMessage($token,$id,$message.KeyboardMenu2());
-                        break;
-                    case 'Телефоны эвакуаторов':
-                        $message='телефоны из БД';
-                        sendMessage($token,$id,$message.KeyboardMenu2());
-                        break;
-                    case 'Назад':
-                        $message='Главное меню';
-                        sendMessage($token,$id,$message.KeyboardMenu());
-                        break;
-                    default:
-                        $message='Неправильный запрос. Для получения справки нажмите "Справка"';
-                        sendMessage($token,$id,$message.KeyboardMenu());
-                }
             }
         else
             {
@@ -80,7 +39,44 @@ switch ($message) {
             }
 
         break;
-
+    case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
+        if (isset($lat,$lon))
+        {
+            $message="Ответ приходит , всё покайфу";
+            //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
+        }
+        else
+        {
+            $message = 'Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
+        }
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Справка':
+        $message='по вопросам разработки : vk.com/3vgenievich';
+        sendMessage($token,$id,$message.KeyboardMenu());
+        break;
+    /*клавиатура 2*/
+    case 'Ближайшие автосервисы':
+        $keyword='автосервис';
+        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Ближайшие шиномонтажи':
+        $keyword='шиномонтаж';
+        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Телефоны эвакуаторов':
+        $message='телефоны из БД';
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Назад':
+        $message='Главное меню';
+        sendMessage($token,$id,$message.KeyboardMenu());
+        break;
+    default:
+        $message='Неправильный запрос. Для получения справки нажмите "Справка"';
+        sendMessage($token,$id,$message.KeyboardMenu());
 }
 ///sendMessage($token,$id,$message);
 function sendMessage($token, $id,$message)
