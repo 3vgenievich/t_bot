@@ -27,6 +27,7 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+$userid=$id['id'];
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -36,8 +37,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $_SESSION['lat']=$Location['latitude'];
-        $_SESSION['lon']=$Location['longitude'];
+        mysqli_query($conn,"INSERT INTO'$db'VALUES('$userid,$lat,$lon')");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
