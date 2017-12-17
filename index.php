@@ -25,7 +25,6 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
-        session_start();
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
         $_SESSION['lat']=$Location['latitude'];
@@ -39,9 +38,9 @@ switch ($message) {
                 $message ="Произошла ошибка, пожалуйста попробуйте ещё раз.";
             }
         sendMessage($token, $id, $message.KeyboardMenu());
-        break;
+        return $lat.$lon;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        if (isset($_SESSION['lat'],$_SESSION['lon']))
+        if (isset($lat,$lon))
         {
             $message="Ответ приходит , всё покайфу";
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
@@ -59,12 +58,12 @@ switch ($message) {
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
         $keyword='автосервис';
-        $message=get_nearest_places($_SESSION['lat'],$_SESSION['lon'],$keyword,$ApiKey);
+        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
         $keyword='шиномонтаж';
-        $message=get_nearest_places($_SESSION['lat'],$_SESSION['lon'],$keyword,$ApiKey);
+        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Телефоны эвакуаторов':
