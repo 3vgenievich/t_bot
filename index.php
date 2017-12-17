@@ -50,6 +50,8 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
+        $lat=mysqli_query($conn,"(SELECT 'lat' FROM '$db' WHERE 'id'=".$id['id'].")");
+        $lon=mysqli_query($conn,"(SELECT 'lon' FROM '$db' WHERE 'id'=".$id['id'].")");
         if (isset($lat,$lon))
         {
             $message="Ответ приходит , всё покайфу";
@@ -68,10 +70,7 @@ switch ($message) {
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
         $lat=mysqli_query($conn,"(SELECT 'lat' FROM '$db' WHERE 'id'=".$id['id'].")");
-        if (isset($lat))
-        {
-        $message='работаетбд';
-        };
+        $lon=mysqli_query($conn,"(SELECT 'lon' FROM '$db' WHERE 'id'=".$id['id'].")");
         $keyword='автосервис';
         $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
