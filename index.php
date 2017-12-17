@@ -12,7 +12,6 @@
  * 9
  *-------------------------------------------------------------------------
  * */
-session_start();
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token=file_get_contents('./token.txt');
@@ -26,6 +25,7 @@ switch ($message) {
         sendMessage($token, $id, $message . KeyboardMenu());
         break;
     case $Location['location']:
+        session_start();
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
         $_SESSION['lat']=$Location['latitude'];
