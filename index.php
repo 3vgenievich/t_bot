@@ -120,9 +120,9 @@ function get_address($lat, $lon, $ApiKey)
 }
 function get_nearest_places($lat,$lon,$keyword,$ApiKey)
 {
-    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=автосервис&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
     $place = get_object_vars(json_decode(file_get_contents($url)));
-    $place = $place['results'][0]->name/*.",".$place['results'][0]->opening_hours.",".$place['results'][0]->vicinity*/;
+    $place = $place['results'][0]->vicinity/*.",".$place['results'][0]->opening_hours.",".$place['results'][0]->vicinity*/;
     return $place;
 
     /*
