@@ -54,14 +54,15 @@ switch ($message) {
         $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         if (isset($lat,$lon))
         {
-            $message="Ответ приходит , всё покайфу";
+            $message="";
+            sendMessage($token,$id,$message.KeyboardMenu2());
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
         }
         else
         {
             $message = 'Ваше местонахождение не определено. Пожалуйста нажмите на кнопку "Отправить местоположение"';
+            sendMessage($token,$id,$message.KeyboardMenu());
         }
-        sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Справка':
         $message='по вопросам разработки : vk.com/3vgenievich';
@@ -69,13 +70,15 @@ switch ($message) {
         break;
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
-        $lat=mysqli_query($conn,"(SELECT 'lat' FROM '$db' WHERE 'id'=".$id['id'].")");
-        $lon=mysqli_query($conn,"(SELECT 'lon' FROM '$db' WHERE 'id'=".$id['id'].")");
+        $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
+        $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         $keyword='автосервис';
         $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
+        $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
+        $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         $keyword='шиномонтаж';
         $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
