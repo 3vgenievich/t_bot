@@ -59,7 +59,7 @@ switch ($message){
 
     case 'Ближайшие автосервисы':
         $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id')");
-        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id)");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id''");
         $keyword='автосервис';
         $message="ближайший к вам автосервис".get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
