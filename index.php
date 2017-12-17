@@ -24,6 +24,7 @@ if ($message=$Location)
     $lat = $Location['latitude'];
     $lon = $Location['longitude'];
 };
+
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
