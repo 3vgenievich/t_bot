@@ -27,7 +27,7 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
-$conn->query("INSERT INTO ".$db."locations (id,locations) VALUES ('123','123')");
+$conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations (id,locations) VALUES (123,123)");
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
