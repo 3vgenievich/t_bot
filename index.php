@@ -37,8 +37,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $conn->query("CREATE TABLE IF NOT EXISTS geolocations");
-        $conn->query("INSERT INTO geolocations (id,lat,lon) VALUES (".$id['id'].",".$lon.",".$lat.")");
+        $conn->query("INSERT INTO locations (id,lat,lon) VALUES (".$id['id'].",".$lon.",".$lat.")");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
@@ -51,8 +50,8 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        $lat=$conn->query("(SELECT lat FROM geolocations WHERE id=".$id['id'].")");
-        $lon=$conn->query("(SELECT lon FROM geolocations WHERE id=".$id['id'].")");
+        $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
+        $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         if (isset($lat,$lon))
         {
             $message="Ответ приходит , всё покайфу";
