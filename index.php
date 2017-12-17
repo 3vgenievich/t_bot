@@ -73,14 +73,14 @@ switch ($message) {
         $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
         $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         $keyword='автосервис';
-        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        $message="ближайший к вам автосервис".get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
         $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
         $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
         $keyword='шиномонтаж';
-        $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        $message="ближайший к вам шиномонтаж".get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Телефоны эвакуаторов':
