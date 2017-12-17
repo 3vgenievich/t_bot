@@ -19,6 +19,7 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+/*
 ###ПОДКЛЮЧЕНИЕ К  БД###
 $url = parse_url(getenv("mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
 $server ='eu-cdbr-west-01.cleardb.com';
@@ -26,8 +27,8 @@ $username = 'bf201afc3c04bc';
 $password = '67a8b83e';
 $db = 'heroku_b8eb8cf712bc20c';
 $conn = new mysqli($server, $username, $password, $db);
-###
-switch ($message) {
+###*/
+switch ($message){
     /*клавиатура 1*/
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
@@ -36,7 +37,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id=".$id['id'].",lat=".$lat.",lon=".$lon);
+        /*$conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id=".$id['id'].",lat=".$lat.",lon=".$lon);*/
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
