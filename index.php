@@ -37,7 +37,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        mysqli_query($conn,"INSERT INTO'$db'VALUES('$userid,$lat,$lon')");
+        mysqli_query($conn,"INSERT INTO 'locations' ('id','lat','lon') VALUES('$userid,$lat,$lon')");
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
