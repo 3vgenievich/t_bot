@@ -50,8 +50,8 @@ switch ($message) {
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
-        $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
+        $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id={$id['id']})");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id={$id['id']})");
         if (isset($lat,$lon))
         {
             $message="Выберите";
@@ -70,15 +70,15 @@ switch ($message) {
         break;
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
-        $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
-        $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
+        $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id={$id['id']})");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id={$id['id']})");
         $keyword='автосервис';
         $message="ближайший к вам автосервис".get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
-        $lat=$conn->query("(SELECT lat FROM locations WHERE id=".$id['id'].")");
-        $lon=$conn->query("(SELECT lon FROM locations WHERE id=".$id['id'].")");
+        $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id={$id['id']})");
+        $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id={$id['id']})");
         $keyword='шиномонтаж';
         $message="ближайший к вам шиномонтаж".get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
