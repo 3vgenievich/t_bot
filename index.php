@@ -67,6 +67,11 @@ switch ($message) {
         break;
     /*клавиатура 2*/
     case 'Ближайшие автосервисы':
+        $lat=mysqli_query($conn,"(SELECT 'lat' FROM '$db' WHERE 'id'=".$id['id'].")");
+        if (isset($lat))
+        {
+        $message='работаетбд';
+        };
         $keyword='автосервис';
         $message=get_nearest_places($lat,$lon,$keyword,$ApiKey);
         sendMessage($token,$id,$message.KeyboardMenu2());
