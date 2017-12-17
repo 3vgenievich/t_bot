@@ -15,10 +15,10 @@
  * */
 ###ПОДКЛЮЧЕНИЕ К  БД###
 $url = parse_url(getenv("mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
-$server = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$db = substr($url["path"], 1);
+$server ='eu-cdbr-west-01.cleardb.com';
+$username = 'bf201afc3c04bc';
+$password = '67a8b83e';
+$db = 'heroku_b8eb8cf712bc20c';
 $conn = new mysqli($server, $username, $password, $db);
 ###
 $output = json_decode(file_get_contents('php://input'),true);
