@@ -28,7 +28,7 @@ switch ($message){
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-                $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id={$id['id']},lat='$lat',lon='$lon'");
+                $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id={$id['id']},lat={$lat},lon={$lon}");
             }
         else
             {
