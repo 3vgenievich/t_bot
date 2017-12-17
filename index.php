@@ -16,7 +16,6 @@ $db = 'heroku_b8eb8cf712bc20c';
 $conn = new mysqli($server, $username, $password, $db);
 
 
-
 switch ($message){
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
