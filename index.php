@@ -18,6 +18,7 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
