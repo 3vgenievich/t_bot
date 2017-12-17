@@ -27,6 +27,7 @@ $token=file_get_contents('./token.txt');
 $ApiKey=file_get_contents('./ApiKey.txt');
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
+
 switch ($message) {
     /*клавиатура 1*/
     case '/start':
@@ -36,8 +37,7 @@ switch ($message) {
     case $Location['location']:
         $lat = $Location['latitude'];
         $lon = $Location['longitude'];
-        $usrid=$id['id'];
-        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id='{$usrid}',lat='{$lat}',lon='{$lon}'");
+        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations SET id=".$id['id'].",lat=".$lat.",lon=".$lon);
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
@@ -139,17 +139,11 @@ function get_nearest_places($lat,$lon,$keyword,$ApiKey)
     $place = /*$place['results'][1]->name.",".$place['results'][1]->opening_hours.",".*/$place['results'][1]->vicinity;
     return $place;
 
-
-
     /*
      *для автосервиса: type:car_repair keyword:автосервис
      *для шиномонтажа type:car_repair keyword:шиномонтаж
      *для эвакуаторов type:car_repair keyword:эвакуатор
      * */
-}
-function evacuation_call()
-{
-    //импорт номеров автоэвакуаторов из БД
 }
 
 ?>
