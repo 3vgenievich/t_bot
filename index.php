@@ -79,6 +79,7 @@ switch ($message) {
     default:
         $message='Неправильный запрос. Для получения справки нажмите "Справка"';
         sendMessage($token,$id,$message.KeyboardMenu());
+        
 }
 ///sendMessage($token,$id,$message);
 function sendMessage($token, $id,$message)
