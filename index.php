@@ -57,6 +57,7 @@ switch ($message){
         sendMessage($token,$id,$message.KeyboardMenu());
         break;
     /*клавиатура 2*/
+    
     case 'Ближайшие автосервисы':
         $lat=$conn->query("(SELECT lat FROM heroku_b8eb8cf712bc20c.locations)");
         $lon=$conn->query("(SELECT lon FROM heroku_b8eb8cf712bc20c.locations)");
