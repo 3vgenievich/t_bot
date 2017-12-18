@@ -13,9 +13,8 @@ $server ='eu-cdbr-west-01.cleardb.com';
 $username = 'bf201afc3c04bc';
 $password = '67a8b83e';
 $db = 'heroku_b8eb8cf712bc20c';
+$table='locations';
 $conn = new mysqli($server, $username, $password, $db);
-
-
 switch ($message){
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
@@ -27,8 +26,8 @@ switch ($message){
         $idusr=$id['id'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-                if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
+                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey).write_location($conn,$lat,$lon,$id,$db,$table);
+                /*if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
                 {
                     $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET lat='$lat',lon='$lon' WHERE id='$id'");
                     // Если уже отправлял местоположение
@@ -37,7 +36,7 @@ switch ($message){
                 {
                     $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
                     // Если в первый раз
-                }
+                }*/
             }
         else
             {
@@ -94,6 +93,21 @@ function sendMessage($token, $id,$message)
 {
     file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
 }
+
+function write_location($conn,$lat,$lon,$id,$db,$table)
+{
+    if ((mysqli_num_rows($conn->query("SELECT id FROM '$db'.'$table' WHERE id='$id'")))>0)
+    {
+        $conn->query("UPDATE '$db'.'$table'  SET lat='$lat',lon='$lon' WHERE id='$id'");
+        // Если уже отправлял местоположение
+    }
+    else
+    {
+        $conn->query("INSERT INTO '$db'.'$table'  SET id='$id',lat='$lat',lon='$lon'");
+        // Если в первый раз
+    }
+}
+
 
 function KeyboardMenu()  #Основная клавиатура
 {
