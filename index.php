@@ -50,7 +50,7 @@ switch ($message){
         $lon=($conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'"));
         if (isset($lat,$lon))
         {
-            $message="Выберите".$lat.$lon;
+            $message="Выберите";
             sendMessage($token,$id,$message.KeyboardMenu2());
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
         }
