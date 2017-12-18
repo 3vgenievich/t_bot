@@ -33,7 +33,7 @@ switch ($message){
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-                    if (mysql_num_rows($conn->query("SELECT * FROM locations WHERE id='$id'") or die ($conn -> error())) > 0)
+                    if (mysql_num_rows($conn->query("SELECT * FROM locations WHERE id='$id'")) > 0)
                         {
                             $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
                         }
@@ -51,7 +51,7 @@ switch ($message){
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
         $lat=$conn->query("SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
-        $lon=$conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id");
+        $lon=$conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
         if (isset($lat,$lon))
         {
             $message="Выберите";
