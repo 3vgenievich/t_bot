@@ -1,4 +1,9 @@
 <?php
+/*
+ *Написать функцию добавления в бд. Сделать проверку по ID, если такой ID уже есть в бд то UPDATE, если нет то INSERT
+ * Написать функцию загрузки местоположения из бд
+ * добавить клавиатуру "показать след. место"
+ * */
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
@@ -28,7 +33,15 @@ switch ($message){
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-                $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
+                    if (mysql_num_rows($conn->query("SELECT * FROM locations WHERE id='$id'") or die ($conn -> error())) > 0)
+                        {
+                            $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
+                        }
+                    else
+                        {
+                            $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
+                        }
+
             }
         else
             {
