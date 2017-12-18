@@ -26,19 +26,8 @@ switch ($message){
         $idusr=$id['id'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey)/*.write_location($conn,$lat,$lon,$id,$db,$table)*/;
-                {
-                    if ((mysqli_num_rows($conn->query("SELECT id FROM '$db'.'$table' WHERE id='$id'")))>0)
-                    {
-                        $conn->query("UPDATE '$db'.'$table'  SET lat='$lat',lon='$lon' WHERE id='$id'");
-                        // Если уже отправлял местоположение
-                    }
-                    else
-                    {
-                        $conn->query("INSERT INTO '$db'.'$table'  SET id='$id',lat='$lat',lon='$lon'");
-                        // Если в первый раз
-                    }
-                }
+                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey).write_location($conn,$lat,$lon,$id,$db,$table);
+
                 /*if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
                 {
                     $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET lat='$lat',lon='$lon' WHERE id='$id'");
@@ -108,14 +97,14 @@ function sendMessage($token, $id,$message)
 
 function write_location($conn,$lat,$lon,$id,$db,$table)
 {
-    if ((mysqli_num_rows($conn->query("SELECT id FROM '$db'.'$table' WHERE id='$id'")))>0)
+    if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
     {
-        $conn->query("UPDATE '$db'.'$table'  SET lat='$lat',lon='$lon' WHERE id='$id'");
+        $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET lat='$lat',lon='$lon' WHERE id='$id'");
         // Если уже отправлял местоположение
     }
     else
     {
-        $conn->query("INSERT INTO '$db'.'$table'  SET id='$id',lat='$lat',lon='$lon'");
+        $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
         // Если в первый раз
     }
 }
