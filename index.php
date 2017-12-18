@@ -1,8 +1,9 @@
 <?php
+include_once "keys.php";
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
-$token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
-$ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';
+#$token='469123782:AAHOpN4Fqow0wNjPYTW3wIke37V5JTwp9iI';
+#$ApiKey='AIzaSyDJy5MnyWi09N_HXiPBuDHyC2ZhIe9kZf4';
 $message= $output['message']['text'];
 $Location=$output['message']['location'];
 
