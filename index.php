@@ -26,18 +26,7 @@ switch ($message){
         $idusr=$id['id'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey).write_location($conn,$lat,$lon,$id,$db,$table);
-
-                /*if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
-                {
-                    $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET lat='$lat',lon='$lon' WHERE id='$id'");
-                    // Если уже отправлял местоположение
-                }
-                else
-                {
-                    $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
-                    // Если в первый раз
-                }*/
+                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey).write_location($conn,$lat,$lon,$id);
             }
         else
             {
@@ -45,7 +34,7 @@ switch ($message){
             }
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
-    case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
+    case 'Поиск ближайших мест':
         if ((mysqli_num_rows($conn->query("SELECT lat,lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
         {
             $message="Выберите";
@@ -65,17 +54,15 @@ switch ($message){
     /*клавиатура 2*/
 
     case 'Ближайшие автосервисы':
-        #$lat=$conn->query("SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
-        #$lon=$conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
         $keyword='автосервис';
-        $message="ближайший к вам автосервис".get_nearest_places($lat,$lon,$keyword,$ApiKey).$lat.$lon;
+        $message="ближайший к вам автосервис ".get_nearest_places($keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
         #$lat=$conn->query("SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
         #$lon=$conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
         $keyword='шиномонтаж';
-        $message="ближайший к вам шиномонтаж".get_nearest_places($lat,$lon,$keyword,$ApiKey);
+        $message="ближайший к вам шиномонтаж  ".get_nearest_places($keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Телефоны эвакуаторов':
@@ -95,7 +82,7 @@ function sendMessage($token, $id,$message)
     file_get_contents("https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $id . "&text=".$message);
 }
 
-function write_location($conn,$lat,$lon,$id,$db,$table)
+function write_location($conn,$lat,$lon,$id)
 {
     if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
     {
@@ -109,7 +96,33 @@ function write_location($conn,$lat,$lon,$id,$db,$table)
     }
 }
 
+function get_address($lat, $lon, $ApiKey)
+{
+    $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey."&language=ru"; //возвращает адрес по координатам
+    $address = get_object_vars(json_decode(file_get_contents($url)));
+    $address = $address['results'][0]->formatted_address;
+    return $address;
 
+}
+function get_nearest_places($keyword,$ApiKey,$conn,$id)
+{
+    $res = $conn->query("SELECT * FROM heroku_b8eb8cf712bc20c.locations WHERE  id ='$id'");
+    $res = mysqli_fetch_assoc($res);
+    $lat =$res['lat'];
+    $lon=$res['lon'];
+    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    $place = get_object_vars(json_decode(file_get_contents($url)));
+    $place = $place['results'][0]->name.",".$place['results'][0]->opening_hours.",".$place['results'][0]->vicinity;
+    return $place;
+
+    /*
+     *для автосервиса: type:car_repair keyword:автосервис
+     *для шиномонтажа type:car_repair keyword:шиномонтаж
+     *для эвакуаторов type:car_repair keyword:эвакуатор
+     * */
+}
+
+###КЛАВИАТУРЫ###
 function KeyboardMenu()  #Основная клавиатура
 {
     $buttons = [[['text'=>"Отправить местоположение", 'request_location'=>true]],[['text'=>"Поиск ближайших мест"]],[['text'=>"Справка"]]];
@@ -132,26 +145,6 @@ function KeyboardMenu2()  #дополнительная клавиатура
     return $reply_markup;
 
 }
-function get_address($lat, $lon, $ApiKey)
-{
-    $url="https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lon."&key=".$ApiKey."&language=ru"; //возвращает адрес по координатам
-    $address = get_object_vars(json_decode(file_get_contents($url)));
-    $address = $address['results'][0]->formatted_address;
-    return $address;
 
-}
-function get_nearest_places($lat,$lon,$keyword,$ApiKey)
-{
-    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&radius=5000&type=car_repair&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
-    $place = get_object_vars(json_decode(file_get_contents($url)));
-    $place = $place['results'][0]->name.",".$place['results'][0]->opening_hours.",".$place['results'][0]->vicinity;
-    return $place;
-
-    /*
-     *для автосервиса: type:car_repair keyword:автосервис
-     *для шиномонтажа type:car_repair keyword:шиномонтаж
-     *для эвакуаторов type:car_repair keyword:эвакуатор
-     * */
-}
 
 
