@@ -67,7 +67,7 @@ switch ($message){
         break;
     case 'Ближайшие АЗС':
         $type='gas_station';
-        $keyword='АЗС';
+        $keyword='заправка';
         $message="ближайшие АЗС:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
