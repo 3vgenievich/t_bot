@@ -73,7 +73,7 @@ switch ($message){
         break;
 
     case 'Телефоны эвакуаторов':
-        $message='ну тут из бд будут телефоны да';
+        $message=$conn->query("select * from heroku_b8eb8cf712bc20c.towtrucks");
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Назад':
