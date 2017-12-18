@@ -72,10 +72,6 @@ switch ($message){
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
 
-    case 'Телефоны эвакуаторов':
-        $message=$conn->query("select * from heroku_b8eb8cf712bc20c.towtrucks");
-        sendMessage($token,$id,$message.KeyboardMenu2());
-        break;
     case 'Назад':
         $message='Главное меню';
         sendMessage($token,$id,$message.KeyboardMenu());
@@ -128,8 +124,7 @@ function get_nearest_places($type,$keyword,$ApiKey,$conn,$id)
     /*
      *для автосервиса: type:car_repair keyword:автосервис
      *для шиномонтажа type:car_repair keyword:шиномонтаж
-     *для эвакуаторов type:car_repair keyword:эвакуатор
-     * */
+     */
 }
 
 ###КЛАВИАТУРЫ###
@@ -146,7 +141,7 @@ function KeyboardMenu()  #Основная клавиатура
 
 function KeyboardMenu2()  #дополнительная клавиатура
 {
-    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Ближайшие автомойки"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
+    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Ближайшие автомойки"]],[['text'=>"Назад"]]];
     $keyboard=json_encode($keyboard=['keyboard' => $buttons,
         'resize_keyboard' => true,
         'one_time_keyboard'=> false,
