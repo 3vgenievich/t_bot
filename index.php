@@ -1,6 +1,6 @@
 <?php
-/*
- *Написать функцию добавления в бд. Сделать проверку по ID, если такой ID уже есть в бд то UPDATE, если нет то INSERT
+/*todo
+ *+++++Написать функцию добавления в бд. Сделать проверку по ID, если такой ID уже есть в бд то UPDATE, если нет то INSERT
  * Написать функцию загрузки местоположения из бд
  * добавить клавиатуру "показать след. место"
  * */
@@ -33,16 +33,16 @@ switch ($message){
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-
+                #Сделать отдельной функцией
                 if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
                 {
                     $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET lat='$lat',lon='$lon' WHERE id='$id'");
-                    // Есть данные
+                    // Если уже отправлял местоположение
                 }
                 else
                 {
                     $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
-                    // нет данных
+                    // Если в первый раз
                 }
             }
         else
@@ -52,11 +52,11 @@ switch ($message){
         sendMessage($token, $id, $message.KeyboardMenu());
         break;
     case 'Поиск ближайших мест': # сделать так что бы при пустой локации клавиатура 2 не открывалась
-        $lat=$conn->query("SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
-        $lon=$conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'");
+        $lat=($conn->query("SELECT lat FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'"));
+        $lon=($conn->query("SELECT lon FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'"));
         if (isset($lat,$lon))
         {
-            $message="Выберите";
+            $message="Выберите".$lat.$lon;
             sendMessage($token,$id,$message.KeyboardMenu2());
             //Открытие доп. клавиатуры, логика вывода ближайших мест!!!
         }
