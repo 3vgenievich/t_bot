@@ -54,15 +54,30 @@ switch ($message){
     /*клавиатура 2*/
 
     case 'Ближайшие автосервисы':
+        $type='car_repair';
         $keyword='автосервис';
-        $message="ближайший к вам автосервис: ".get_nearest_places($keyword,$ApiKey,$conn,$id);
+        $message="ближайший к вам автосервис: ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
+        $type='car_repair';
         $keyword='шиномонтаж';
-        $message="ближайший к вам шиномонтаж:  ".get_nearest_places($keyword,$ApiKey,$conn,$id);
+        $message="ближайший к вам шиномонтаж:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
+    case 'Ближайшие АЗС':
+        $type='gas_station';
+        $keyword='';
+        $message="ближайшие АЗС:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+    case 'Ближайшие автомойки':
+        $type='car_wash';
+        $keyword='';
+        $message="ближайшие АЗС:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
+        sendMessage($token,$id,$message.KeyboardMenu2());
+        break;
+
     case 'Телефоны эвакуаторов':
         $message='ну тут из бд будут телефоны да';
         sendMessage($token,$id,$message.KeyboardMenu2());
@@ -102,13 +117,13 @@ function get_address($lat, $lon, $ApiKey)
     return $address;
 
 }
-function get_nearest_places($keyword,$ApiKey,$conn,$id)
+function get_nearest_places($type,$keyword,$ApiKey,$conn,$id)
 {
     $res = $conn->query("SELECT * FROM heroku_b8eb8cf712bc20c.locations WHERE  id ='$id'");
     $res = mysqli_fetch_assoc($res);
     $lat =$res['lat'];
     $lon=$res['lon'];
-    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&rankby=distance&type=car_repair&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
+    $url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lon."&rankby=distance&type=.$type.&keyword=".$keyword."&key=".$ApiKey;//находит автосервисы в радиусе 5км
     $place = get_object_vars(json_decode(file_get_contents($url)));
     $place = "1)  ".$place['results'][0]->name.",".$place['results'][0]->vicinity."  2) ".$place['results'][1]->name.",".$place['results'][1]->vicinity."  3)  ".$place['results'][2]->name.",".$place['results'][2]->vicinity;
     return $place;
@@ -134,7 +149,7 @@ function KeyboardMenu()  #Основная клавиатура
 
 function KeyboardMenu2()  #дополнительная клавиатура
 {
-    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
+    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие АЗС"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Ближайшие автомойки"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
     $keyboard=json_encode($keyboard=['keyboard' => $buttons,
         'resize_keyboard' => true,
         'one_time_keyboard'=> false,
