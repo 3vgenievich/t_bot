@@ -33,15 +33,19 @@ switch ($message){
         if (isset($lat,$lon))
             {
                 $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey);
-                    if ($conn->query("SELECT EXISTS (SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id')"))
-                        {
-                            $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
-                        }
-                    else
-                        {
-                            $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
-                        }
 
+                $res = $conn->query("SELECT COUNT(*) FROM heroku_b8eb8cf712bc20c.locations WHERE id ='$id'") or die();
+                $row = $conn->fetch_row($res);
+                if ($row[0] > 0)
+                {
+                    $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
+                    // Есть данные
+                }
+                else
+                {
+                    $conn->query("INSERT INTO heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
+                    // нет данных
+                }
             }
         else
             {
