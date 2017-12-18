@@ -36,7 +36,7 @@ switch ($message){
 
                 if ((mysqli_num_rows($conn->query("SELECT id FROM heroku_b8eb8cf712bc20c.locations WHERE id='$id'")))>0)
                 {
-                    $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET id='$id',lat='$lat',lon='$lon'");
+                    $conn->query("UPDATE heroku_b8eb8cf712bc20c.locations  SET lat='$lat',lon='$lon' WHERE id='$id'");
                     // Есть данные
                 }
                 else
