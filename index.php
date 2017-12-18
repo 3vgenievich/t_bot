@@ -67,14 +67,14 @@ switch ($message){
         break;
     case 'Ближайшие АЗС':
         $type='gas_station';
-        $keyword='';
+        $keyword='АЗС';
         $message="ближайшие АЗС:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие автомойки':
         $type='car_wash';
-        $keyword='';
-        $message="ближайшие АЗС:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
+        $keyword='мойка';
+        $message="ближайшие автомойки:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
 
