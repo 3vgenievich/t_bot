@@ -65,12 +65,6 @@ switch ($message){
         $message="ближайший к вам шиномонтаж:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
-    case 'Ближайшие АЗС':
-        $type='gas_station';
-        $keyword='заправка';
-        $message="ближайшие АЗС:  ".get_nearest_places($type,$keyword,$ApiKey,$conn,$id);
-        sendMessage($token,$id,$message.KeyboardMenu2());
-        break;
     case 'Ближайшие автомойки':
         $type='car_wash';
         $keyword='мойка';
@@ -149,7 +143,7 @@ function KeyboardMenu()  #Основная клавиатура
 
 function KeyboardMenu2()  #дополнительная клавиатура
 {
-    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие АЗС"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Ближайшие автомойки"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
+    $buttons=[[['text'=>"Ближайшие автосервисы"]],[['text'=>"Ближайшие шиномонтажи"]],[['text'=>"Ближайшие автомойки"]],[['text'=>"Телефоны эвакуаторов"]],[['text'=>"Назад"]]];
     $keyboard=json_encode($keyboard=['keyboard' => $buttons,
         'resize_keyboard' => true,
         'one_time_keyboard'=> false,
