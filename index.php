@@ -1,5 +1,6 @@
 <?php
 include_once "keys.php";
+include_once "conn.php";
 $output = json_decode(file_get_contents('php://input'),true);
 $id = $output['message']['chat']['id'];
 $message= $output['message']['text'];
@@ -7,13 +8,13 @@ $Location=$output['message']['location'];
 
 
 
-$url = parse_url(getenv("mysql://bf201afc3c04bc:67a8b83e@eu-cdbr-west-01.cleardb.com/heroku_b8eb8cf712bc20c?reconnect=true"));
-$server ='eu-cdbr-west-01.cleardb.com';
+
+/*$server ='eu-cdbr-west-01.cleardb.com';
 $username = 'bf201afc3c04bc';
 $password = '67a8b83e';
 $db = 'heroku_b8eb8cf712bc20c';
 $table='locations';
-$conn = new mysqli($server, $username, $password, $db);
+$conn = new mysqli($server, $username, $password, $db);*/
 switch ($message){
     case '/start':
         $message = 'Привет! Нажми отправить местоположение чтобы начать.';
