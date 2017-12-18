@@ -26,7 +26,7 @@ switch ($message){
         $idusr=$id['id'];
         if (isset($lat,$lon))
             {
-                $message = "Отлично! ваше местонахождение определено.  Широта: ".$lat."  Долгота: ".$lon."  Адрес: ".get_address($lat,$lon,$ApiKey).write_location($conn,$lat,$lon,$id);
+                $message = "Отлично! ваше местонахождение определено.  %0A Широта: ".$lat."%0A Долгота: ".$lon."%0A Адрес: ".get_address($lat,$lon,$ApiKey).write_location($conn,$lat,$lon,$id);
             }
         else
             {
