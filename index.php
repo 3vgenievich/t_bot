@@ -55,16 +55,16 @@ switch ($message){
 
     case 'Ближайшие автосервисы':
         $keyword='автосервис';
-        $message="ближайший к вам автосервис ".get_nearest_places($keyword,$ApiKey,$conn,$id);
+        $message="ближайший к вам автосервис: ".get_nearest_places($keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Ближайшие шиномонтажи':
         $keyword='шиномонтаж';
-        $message="ближайший к вам шиномонтаж  ".get_nearest_places($keyword,$ApiKey,$conn,$id);
+        $message="ближайший к вам шиномонтаж:  ".get_nearest_places($keyword,$ApiKey,$conn,$id);
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Телефоны эвакуаторов':
-        $message='телефоны из БД';
+        $message='ну тут из бд будут телефоны да';
         sendMessage($token,$id,$message.KeyboardMenu2());
         break;
     case 'Назад':
